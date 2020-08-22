@@ -140,6 +140,9 @@ export default class Parameters extends Component {
               <thead>
                 <tr>
                   <th className="col_header parameters-col_name">Name</th>
+                  <th className="col_header parameters-col_in">In</th>
+                  <th className="col_header parameters-col_type">Type</th>
+                  <th className="col_header parameters-col_required">Required</th>
                   <th className="col_header parameters-col_description">Description</th>
                 </tr>
               </thead>
