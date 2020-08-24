@@ -142,10 +142,10 @@ table
 .parameter__extension
 {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: normal;
     margin-right: 0.75em;
-    color: rgb(59,65,81);
-    font-family: sans-serif;
+
+    @include text_body();
 }
 
 .parameter__deprecated

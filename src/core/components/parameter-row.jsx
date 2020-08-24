@@ -265,21 +265,31 @@ export default class ParameterRow extends Component {
           <div className="parameter__name">
             { param.get("name") }
           </div>
+          <div className="parameter__deprecated">
+            { isOAS3 && param.get("deprecated") ? "deprecated" : null }
+          </div>
         </td>
         <td className="parameters-col_in">
-          <div className="parameter__in">{ param.get("in") }</div>
+          <div className="parameter__in">
+            { param.get("in") }
+          </div>
+          { !showCommonExtensions || !commonExt.size ? null : commonExt.entrySeq().map(([key, v]) => <ParameterExt key={`${key}-${v}`} xKey={key} xVal={v} /> )}
+          { !showExtensions || !extensions.size ? null : extensions.map((v, key) => <ParameterExt key={`${key}-${v}`} xKey={key} xVal={v} /> )}
+        </td>
+        <td className="parameters-col_required">
+          <div className="parameter__name">
+            { required ? "True" : "False" }
+          </div>
         </td>
         <td className="parameters-col_type">
           <div className="parameter__type">
             { type }
-            { itemType && `[${itemType}]` }
-            { format && <span className="prop-format">(${format})</span>}
           </div>
-        </td>
-        <td className="parameters-col_required">
-          <div className="parameter__name">
-            { !required ? null : <span>True</span> }
-	    { required ? null : <span>False</span> }
+          <div className="parameter__type">
+            { itemType && `[${itemType}]` }
+          </div>
+          <div className="parameter__type">
+            { format && <span className="prop-format">(${format})</span>}
           </div>
         </td>
         <td className="parameters-col_description">
