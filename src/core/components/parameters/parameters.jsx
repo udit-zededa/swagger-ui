@@ -114,7 +114,7 @@ export default class Parameters extends Component {
           { isOAS3 ? (
           <div className="tab-header">
               <div onClick={() => this.toggleTab("parameters")} className={`tab-item ${this.state.parametersVisible && "active"}`}>
-                <h4 className="opblock-title"><span>Parameters</span></h4>
+                <h4 className="opblock-title"><span> Request Parameters</span></h4>
               </div>
               { operation.get("callbacks") ?
                 (
@@ -126,7 +126,7 @@ export default class Parameters extends Component {
             </div>
           ) : (
             <div className="tab-header">
-            <h4 className="opblock-title">Parameters</h4>
+            <h4 className="opblock-title"> Request Parameters</h4>
           </div>
           )}
             { allowTryItOut ? (
@@ -140,6 +140,9 @@ export default class Parameters extends Component {
               <thead>
                 <tr>
                   <th className="col_header parameters-col_name">Name</th>
+                  <th className="col_header parameters-col_in">In</th>
+                  <th className="col_header parameters-col_required">Required</th>
+                  <th className="col_header parameters-col_type">Type</th>
                   <th className="col_header parameters-col_description">Description</th>
                 </tr>
               </thead>

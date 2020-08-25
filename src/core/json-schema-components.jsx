@@ -56,7 +56,7 @@ export class JsonSchemaForm extends Component {
     if (!Comp) {
       Comp = getComponent("JsonSchema_string")
     }
-    return <Comp { ...this.props } errors={errors} fn={fn} getComponent={getComponent} value={value} onChange={onChange} schema={schema} disabled={disabled}/>
+    return <Comp { ...this.props } errors={errors} fn={fn} getComponent={getComponent} value={value} onChange={onChange} schema={schema} hidden={disabled}/>
   }
 }
 
@@ -86,7 +86,7 @@ export class JsonSchema_string extends Component {
                       allowedValues={ enumValue }
                       value={ value }
                       allowEmptyValue={ !required }
-                      disabled={disabled}
+                      hidden={disabled}
                       onChange={ this.onEnumChange }/>)
     }
 
@@ -98,7 +98,7 @@ export class JsonSchema_string extends Component {
           className={errors.length ? "invalid" : ""}
           title={errors.length ? errors : ""}
           onChange={this.onChange}
-          disabled={isDisabled} />
+          hidden={isDisabled} />
       )
     }
     else {
@@ -112,7 +112,7 @@ export class JsonSchema_string extends Component {
           debounceTimeout={350}
           placeholder={description}
           onChange={this.onChange}
-          disabled={isDisabled} />
+          hidden={isDisabled} />
       )
     }
   }
@@ -193,7 +193,7 @@ export class JsonSchema_array extends PureComponent {
                       title={ errors.length ? errors : ""}
                       multiple={ true }
                       value={ value }
-                      disabled={disabled}
+                      hidden={disabled}
                       allowedValues={ schemaItemsEnum }
                       allowEmptyValue={ !required }
                       onChange={ this.onEnumChange }/>)
@@ -215,7 +215,7 @@ export class JsonSchema_array extends PureComponent {
                     <JsonSchemaArrayItemFile
                     value={item}
                     onChange={(val)=> this.onItemChange(val, i)}
-                    disabled={disabled}
+                    hidden={disabled}
                     errors={errors}
                     getComponent={getComponent}
                     />
@@ -223,13 +223,13 @@ export class JsonSchema_array extends PureComponent {
                       <JsonSchemaArrayItemText
                         value={item}
                         onChange={(val) => this.onItemChange(val, i)}
-                        disabled={disabled}
+                        hidden={disabled}
                         errors={errors}
                       />
                       : <ArrayItemsComponent {...this.props}
                         value={item}
                         onChange={(val) => this.onItemChange(val, i)}
-                        disabled={disabled}
+                        hidden={disabled}
                         errors={errors}
                         schema={schemaItemsSchema}
                         getComponent={getComponent}
@@ -285,7 +285,7 @@ export class JsonSchemaArrayItemText extends Component {
       debounceTimeout={350}
       placeholder={description}
       onChange={this.onChange}
-      disabled={disabled} />)
+      hidden={disabled} />)
   }
 }
 
@@ -307,7 +307,7 @@ export class JsonSchemaArrayItemFile extends Component {
       className={errors.length ? "invalid" : ""}
       title={errors.length ? errors : ""}
       onChange={this.onFileChange}
-      disabled={isDisabled} />)
+      hidden={isDisabled} />)
   }
 }
 
@@ -329,7 +329,7 @@ export class JsonSchema_boolean extends Component {
     return (<Select className={ errors.length ? "invalid" : ""}
                     title={ errors.length ? errors : ""}
                     value={ String(value) }
-                    disabled={ disabled }
+                    hidden={ disabled }
                     allowedValues={ enumValue }
                     allowEmptyValue={ !required }
                     onChange={ this.onEnumChange }/>)
@@ -370,7 +370,7 @@ export class JsonSchema_object extends PureComponent {
           className={cx({ invalid: errors.size })}
           title={ errors.size ? errors.join(", ") : ""}
           value={stringify(value)}
-          disabled={disabled}
+          hidden={disabled}
           onChange={ this.handleOnChange }/>
       </div>
     )

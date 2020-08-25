@@ -90,7 +90,6 @@ table
 
 .parameters-col_description
 {
-    width: 99%; // forces other columns to shrink to their content widths
     margin-bottom: 2em;
     input[type=text]
     {
@@ -142,10 +141,11 @@ table
 .parameter__in,
 .parameter__extension
 {
-    font-size: 12px;
-    font-style: italic;
+    font-size: 16px;
+    font-weight: normal;
+    margin-right: 0.75em;
 
-    @include text_code($table-parameter-in-font-color);
+    @include text_body();
 }
 
 .parameter__deprecated

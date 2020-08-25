@@ -262,23 +262,36 @@ export default class ParameterRow extends Component {
     return (
       <tr data-param-name={param.get("name")} data-param-in={param.get("in")}>
         <td className="parameters-col_name">
-          <div className={required ? "parameter__name required" : "parameter__name"}>
+          <div className="parameter__name">
             { param.get("name") }
-            { !required ? null : <span>&nbsp;*</span> }
-          </div>
-          <div className="parameter__type">
-            { type }
-            { itemType && `[${itemType}]` }
-            { format && <span className="prop-format">(${format})</span>}
           </div>
           <div className="parameter__deprecated">
-            { isOAS3 && param.get("deprecated") ? "deprecated": null }
+            { isOAS3 && param.get("deprecated") ? "deprecated" : null }
           </div>
-          <div className="parameter__in">({ param.get("in") })</div>
+        </td>
+        <td className="parameters-col_in">
+          <div className="parameter__in">
+            { param.get("in") }
+          </div>
           { !showCommonExtensions || !commonExt.size ? null : commonExt.entrySeq().map(([key, v]) => <ParameterExt key={`${key}-${v}`} xKey={key} xVal={v} /> )}
           { !showExtensions || !extensions.size ? null : extensions.map((v, key) => <ParameterExt key={`${key}-${v}`} xKey={key} xVal={v} /> )}
         </td>
-
+        <td className="parameters-col_required">
+          <div className="parameter__name">
+            { required ? "True" : "False" }
+          </div>
+        </td>
+        <td className="parameters-col_type">
+          <div className="parameter__type">
+            { type }
+          </div>
+          <div className="parameter__type">
+            { itemType && `[${itemType}]` }
+          </div>
+          <div className="parameter__type">
+            { format && <span className="prop-format">(${format})</span>}
+          </div>
+        </td>
         <td className="parameters-col_description">
           { param.get("description") ? <Markdown source={ param.get("description") }/> : null }
 
