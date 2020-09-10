@@ -17,6 +17,7 @@ import OperationContainer from "core/containers/OperationContainer"
 
 import App from "core/components/app"
 import AuthorizationPopup from "core/components/auth/authorization-popup"
+import AuthorizationPopupPerAPI from "core/components/auth/authorization-popup-perAPI"
 import AuthorizeBtn from "core/components/auth/authorize-btn"
 import AuthorizeBtnContainer from "core/containers/authorize-btn"
 import AuthorizeOperationBtn from "core/components/auth/authorize-operation-btn"
@@ -95,6 +96,7 @@ export default function() {
     components: {
       App,
       authorizationPopup: AuthorizationPopup,
+      authorizationPopupPerAPI : AuthorizationPopupPerAPI,
       authorizeBtn: AuthorizeBtn,
       AuthorizeBtnContainer,
       authorizeOperationBtn: AuthorizeOperationBtn,
