@@ -17,14 +17,17 @@ import OperationContainer from "core/containers/OperationContainer"
 
 import App from "core/components/app"
 import AuthorizationPopup from "core/components/auth/authorization-popup"
-import AuthorizationPopupPerAPI from "core/components/auth/authorization-popup-perAPI"
+import ApiAccessDetails from "core/components/auth/api-access-details"
 import AuthorizeBtn from "core/components/auth/authorize-btn"
 import AuthorizeBtnContainer from "core/containers/authorize-btn"
 import AuthorizeOperationBtn from "core/components/auth/authorize-operation-btn"
 import Auths from "core/components/auth/auths"
+import AuthsAccessDetails from "core/components/auth/auths-access-details"
 import AuthItem from "core/components/auth/auth-item"
+import AuthItemAccessDetails from "core/components/auth/auth-item-access-details"
 import AuthError from "core/components/auth/error"
 import ApiKeyAuth from "core/components/auth/api-key-auth"
+import ApiKeyAuthAccessDetails from "core/components/auth/api-key-access-details"
 import BasicAuth from "core/components/auth/basic-auth"
 import Example from "core/components/example"
 import ExamplesSelect from "core/components/examples-select"
@@ -96,15 +99,18 @@ export default function() {
     components: {
       App,
       authorizationPopup: AuthorizationPopup,
-      authorizationPopupPerAPI : AuthorizationPopupPerAPI,
+      apiAccessDetails : ApiAccessDetails,
       authorizeBtn: AuthorizeBtn,
       AuthorizeBtnContainer,
       authorizeOperationBtn: AuthorizeOperationBtn,
       auths: Auths,
+      authsAccessDetails: AuthsAccessDetails,
       AuthItem: AuthItem,
+      AuthItemAccessDetails: AuthItemAccessDetails,
       authError: AuthError,
       oauth2: Oauth2,
       apiKeyAuth: ApiKeyAuth,
+      apiKeyAuthAccessDetails: ApiKeyAuthAccessDetails,
       basicAuth: BasicAuth,
       clear: Clear,
       liveResponse: LiveResponse,

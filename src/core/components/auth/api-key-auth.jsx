@@ -51,46 +51,28 @@ export default class ApiKeyAuth extends React.Component {
 
     return (
       <div>
-        <div className="table-container">
-        { value && <h4>Authorized</h4>}
-            <table className="parameters">
-              <thead>
-                <tr>
-                  <th className="col_header parameters-col_security_type">Security Type</th>
-                  <th className="col_header parameters-col_description">Description</th>
-                  <th className="col_header parameters-col_name">Name</th>
-                  <th className="col_header parameters-col_in">In</th>
-                  <th className="col_header parameters-col_value">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                      <code>{ name || schema.get("name") }</code>&nbsp;
-                      <h4>(apiKey)</h4>
-                      <JumpToPath path={[ "securityDefinitions", name ]} />
-                  </td>
-                  <td>
-                      <Markdown source={ schema.get("description") } />
-                  </td>
-                  <td>
-                    <code>{ schema.get("name") }</code>
-                  </td>
-                  <td>
-                    <code>{ schema.get("in") }</code>
-                  </td>
-                  <td>
-                    <label></label>
-                      {
-                        value ? <code> ****** </code>
-                        : <Col><Input type="text" onChange={ this.onChange }/></Col>
-                      }
-                  </td>
-                  </tr>
-              </tbody>
-            </table>
-        </div>
-        
+        <h4>
+          <code>{ name || schema.get("name") }</code>&nbsp;
+          (apiKey)
+          <JumpToPath path={[ "securityDefinitions", name ]} />
+        </h4>
+        { value && <h6>Authorized</h6>}
+        <Row>
+          <Markdown source={ schema.get("description") } />
+        </Row>
+        <Row>
+          <p>Name: <code>{ schema.get("name") }</code></p>
+        </Row>
+        <Row>
+          <p>In: <code>{ schema.get("in") }</code></p>
+        </Row>
+        <Row>
+          <label>Value:</label>
+          {
+            value ? <code> ****** </code>
+                  : <Col><Input type="text" onChange={ this.onChange }/></Col>
+          }
+        </Row>
         {
           errors.valueSeq().map( (error, key) => {
             return <AuthError error={ error }
