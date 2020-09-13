@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 export default class ApiKeyAuthAccessDetails extends React.Component {
   static propTypes = {
     authorized: PropTypes.object,
+    authSelectors: PropTypes.object.isRequired,
     getComponent: PropTypes.func.isRequired,
     errSelectors: PropTypes.object.isRequired,
     schema: PropTypes.object.isRequired,
@@ -13,12 +14,19 @@ export default class ApiKeyAuthAccessDetails extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    let { name, schema } = this.props
+    let { name, schema, authorized, authSelectors } = this.props
+    let auth = authorized && authorized.get(name)
+    let authConfigs = authSelectors.getConfigs() || {}
     let value = this.getValue()
+    let scopes = auth && auth.get("scopes") || authConfigs.scopes || []
+    if (typeof scopes === "string") {
+      scopes = scopes.split(authConfigs.scopeSeparator || " ")
+    }
 
     this.state = {
       name: name,
       schema: schema,
+      scopes: scopes,
       value: value
     }
   }
@@ -37,17 +45,13 @@ export default class ApiKeyAuthAccessDetails extends React.Component {
     this.setState(newState)
     onChange(newState)
   }
-
+  
   render() {
-    let { schema, getComponent, errSelectors, name } = this.props
-    const Input = getComponent("Input")
-    const Row = getComponent("Row")
-    const Col = getComponent("Col")
-    const AuthError = getComponent("authError")
+    let { schema, getComponent, name, authSelectors } = this.props
     const Markdown = getComponent("Markdown", true)
-    const JumpToPath = getComponent("JumpToPath", true)
-    let value = this.getValue()
-    let errors = errSelectors.allErrors().filter( err => err.get("authId") === name)
+    let scopes = schema.get("allowedScopes") || schema.get("scopes")
+    let authorizedAuth = authSelectors.authorized().get(name)
+    let isAuthorized = !!authorizedAuth
 
     return (
         <div className="table-container">
@@ -77,7 +81,19 @@ export default class ApiKeyAuthAccessDetails extends React.Component {
                     <code>{ schema.get("in") }</code>
                   </td>
                   <td>
-                    
+                  {
+                    !isAuthorized && scopes && scopes.size ? <div className="scopes">
+                      { scopes.map((description, name) => {
+                        return (
+                                     <div className="text">
+                                       <h4 className="name">{name}</h4>&nbsp;
+                                       <code className="description">{description}</code>
+                                     </div>
+                        )
+                        }).toArray()
+                      }
+                    </div> : null
+                  }
                   </td>
                   </tr>
               </tbody>

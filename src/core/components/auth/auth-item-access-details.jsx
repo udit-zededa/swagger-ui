@@ -17,6 +17,7 @@ export default class AuthsAccessDetails extends React.Component {
       getComponent,
       onAuthChange,
       authorized,
+      authSelectors,
       errSelectors
     } = this.props
     const ApiKeyAuthAccessDetails = getComponent("apiKeyAuthAccessDetails")
@@ -31,6 +32,7 @@ export default class AuthsAccessDetails extends React.Component {
                                         name={ name }
                                         errSelectors={ errSelectors }
                                         authorized={ authorized }
+                                        authSelectors= { authSelectors }
                                         getComponent={ getComponent }
                                         onChange={ onAuthChange } />
         break
