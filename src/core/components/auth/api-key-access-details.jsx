@@ -54,8 +54,12 @@ export default class ApiKeyAuthAccessDetails extends React.Component {
     let isAuthorized = !!authorizedAuth
 
     return (
+      <div>
+        <div className="opblock-section-header">
+            <h4>Security</h4>
+        </div>
         <div className="table-container">
-            <table className="parameters">
+          <table className="parameters">
               <thead>
                 <tr>
                   <th className="col_header parameters-col_security_type">Security Type</th>
@@ -99,6 +103,7 @@ export default class ApiKeyAuthAccessDetails extends React.Component {
               </tbody>
             </table>
         </div>
+      </div>
     )
   }
 }

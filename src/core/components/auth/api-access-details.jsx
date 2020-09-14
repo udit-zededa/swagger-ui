@@ -1,7 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-export default class AuthorizationParameters extends React.Component {
+export default class ApiAccessDetails extends React.Component {
+  static propTypes = {
+    operationProps: PropTypes.instanceOf(Iterable).isRequired,
+  }
+  static defaultProps = {
+    operationProps: null,
+  }
   close =() => {
     let { authActions } = this.props
 
@@ -9,15 +15,13 @@ export default class AuthorizationParameters extends React.Component {
   }
 
   render() {
-    let { authSelectors, authActions, getComponent, errSelectors, specSelectors, fn: { AST = {} } } = this.props
-    let definitions = authSelectors.definitionsToAuthorize()
+    let { authSelectors, authActions, getComponent, operationProps,errSelectors, specSelectors, fn: { AST = {} } } = this.props
+    let security = operationProps.get("security")
+    let definitions = authSelectors.definitionsForRequirements(security)
     const AuthsAccessDetails = getComponent("authsAccessDetails")
 
     return (
       <div>
-        <div className="opblock-section-header">
-            <h4>Security</h4>
-        </div>
         <div className="modal-ux-content">
             {
                 definitions.valueSeq().map(( definition, key ) => {

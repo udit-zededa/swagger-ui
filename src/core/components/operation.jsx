@@ -234,7 +234,8 @@ export default class Operation extends PureComponent {
               { !showExtensions || !extensions.size ? null :
                 <OperationExt extensions={ extensions } getComponent={ getComponent } />
               }
-              { <ApiAccessDetails /> }
+              { <ApiAccessDetails 
+                  operationProps={operationProps}/> }
             </div>
           </Collapse>
         </div>
