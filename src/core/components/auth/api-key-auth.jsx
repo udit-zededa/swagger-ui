@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 export default class ApiKeyAuth extends React.Component {
   static propTypes = {
     authorized: PropTypes.object,
+    authSelectors: PropTypes.object.isRequired,
     getComponent: PropTypes.func.isRequired,
     errSelectors: PropTypes.object.isRequired,
     schema: PropTypes.object.isRequired,
@@ -13,12 +14,19 @@ export default class ApiKeyAuth extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    let { name, schema } = this.props
+    let { name, schema, authorized, authSelectors } = this.props
+    let auth = authorized && authorized.get(name)
+    let authConfigs = authSelectors.getConfigs() || {}
     let value = this.getValue()
+    let scopes = auth && auth.get("scopes") || authConfigs.scopes || []
+    if (typeof scopes === "string") {
+      scopes = scopes.split(authConfigs.scopeSeparator || " ")
+    }
 
     this.state = {
       name: name,
       schema: schema,
+      scopes: scopes,
       value: value
     }
   }
@@ -38,8 +46,31 @@ export default class ApiKeyAuth extends React.Component {
     onChange(newState)
   }
 
+  onScopeChange =(e) => {
+    let { target } = e
+    let { checked } = target
+    let scope = target.dataset.value
+
+    if ( checked && this.state.scopes.indexOf(scope) === -1 ) {
+      let newScopes = this.state.scopes.concat([scope])
+      this.setState({ scopes: newScopes })
+    } else if ( !checked && this.state.scopes.indexOf(scope) > -1) {
+      this.setState({ scopes: this.state.scopes.filter((val) => val !== scope) })
+    }
+  }
+
+  selectScopes =(e) => {
+    if (e.target.dataset.all) {
+      this.setState({
+        scopes: Array.from((this.props.schema.get("allowedScopes") || this.props.schema.get("scopes")).keys())
+      })
+    } else {
+      this.setState({ scopes: [] })
+    }
+  }
+
   render() {
-    let { schema, getComponent, errSelectors, name } = this.props
+    let { schema, getComponent, errSelectors, name, authSelectors } = this.props
     const Input = getComponent("Input")
     const Row = getComponent("Row")
     const Col = getComponent("Col")
@@ -48,6 +79,10 @@ export default class ApiKeyAuth extends React.Component {
     const JumpToPath = getComponent("JumpToPath", true)
     let value = this.getValue()
     let errors = errSelectors.allErrors().filter( err => err.get("authId") === name)
+    let scopes = schema.get("allowedScopes") || schema.get("scopes")
+    let flow = schema.get("flow")
+    let authorizedAuth = authSelectors.authorized().get(name)
+    let isAuthorized = !!authorizedAuth
 
     return (
       <div>
@@ -78,6 +113,37 @@ export default class ApiKeyAuth extends React.Component {
             return <AuthError error={ error }
                               key={ key }/>
           } )
+        }
+        {
+          !isAuthorized && scopes && scopes.size ? <div className="scopes">
+            <h2>
+              Scopes:
+              <a onClick={this.selectScopes} data-all={true}>select all</a>
+              <a onClick={this.selectScopes}>select none</a>
+            </h2>
+            { scopes.map((description, name) => {
+              return (
+                <Row key={ name }>
+                  <div className="checkbox">
+                    <Input data-value={ name }
+                          id={`${name}-${flow}-checkbox-${this.state.name}`}
+                           disabled={ isAuthorized }
+                           checked={ this.state.scopes.includes(name) }
+                           type="checkbox"
+                           onChange={ this.onScopeChange }/>
+                         <label htmlFor={`${name}-${flow}-checkbox-${this.state.name}`}>
+                           <span className="item"></span>
+                           <div className="text">
+                             <p className="name">{name}</p>
+                             <p className="description">{description}</p>
+                           </div>
+                         </label>
+                  </div>
+                </Row>
+              )
+              }).toArray()
+            }
+          </div> : null
         }
       </div>
     )

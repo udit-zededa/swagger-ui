@@ -101,7 +101,7 @@ export default class Operation extends PureComponent {
     const OperationExt = getComponent( "OperationExt" )
     const OperationSummary = getComponent( "OperationSummary" )
     const Link = getComponent( "Link" )
-
+    const ApiAccessDetails = getComponent("apiAccessDetails", true)
     const { showExtensions } = getConfigs()
 
     // Merge in Live Response
@@ -234,6 +234,8 @@ export default class Operation extends PureComponent {
               { !showExtensions || !extensions.size ? null :
                 <OperationExt extensions={ extensions } getComponent={ getComponent } />
               }
+              { <ApiAccessDetails 
+                  operationProps={operationProps}/> }
             </div>
           </Collapse>
         </div>
