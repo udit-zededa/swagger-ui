@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import ImPropTypes from "react-immutable-proptypes"
 
-export default class AuthsAccessDetails extends React.Component {
+export default class AuthItemAccessDetails extends React.Component {
   static propTypes = {
     schema: ImPropTypes.orderedMap.isRequired,
     name: PropTypes.string.isRequired,

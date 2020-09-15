@@ -59,7 +59,7 @@ export default class ApiKeyAuthAccessDetails extends React.Component {
             <h4>Security</h4>
         </div>
         <div className="table-container">
-          <table className="parameters">
+          <table className="security">
               <thead>
                 <tr>
                   <th className="col_header parameters-col_security_type">Security Type</th>
