@@ -47,6 +47,7 @@ export default class ObjectModel extends Component {
     const JumpToPath = getComponent("JumpToPath", true)
     const Markdown = getComponent("Markdown", true)
     const Model = getComponent("Model")
+    const ModelType = getComponent("ModelType")
     const ModelCollapse = getComponent("ModelCollapse")
     const Property = getComponent("Property")
 
@@ -88,13 +89,15 @@ export default class ObjectModel extends Component {
                 <tr>
                   <th id="model-head"><b>Key</b></th>
                   <th id="model-head"><b>Required</b></th>
-                  <th id="model-head"><b>Value</b></th>
+                  <th id="model-head"><b>Type</b></th>
+                  <th id="model-head" className="parameters-col_value"><b>Value</b></th>
                 </tr>
               </thead>
               <tbody>
               {
                 !description ? null : <tr className="description">
-                    <td>description:</td>
+                    <td>Model Description:</td>
+                    <td></td>
                     <td></td>
                     <td>
                       <Markdown source={ description } />
@@ -127,6 +130,15 @@ export default class ObjectModel extends Component {
                           { key } 
                         </td>
                         <td>{ isRequired ? "True" : "False" }</td>
+                        <td>
+                          <ModelType key={ `object-${name}-${key}_${value}` } { ...otherProps }
+                                 required={ isRequired }
+                                 getComponent={ getComponent }
+                                 specPath={specPath.push("properties", key)}
+                                 getConfigs={ getConfigs }
+                                 schema={ value }
+                                 depth={ depth + 1 } />
+                        </td>
                         <td>
                           <Model key={ `object-${name}-${key}_${value}` } { ...otherProps }
                                  required={ isRequired }
