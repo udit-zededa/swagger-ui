@@ -47,6 +47,7 @@ export default class ObjectModel extends Component {
     const JumpToPath = getComponent("JumpToPath", true)
     const Markdown = getComponent("Markdown", true)
     const Model = getComponent("Model")
+    const ModelType = getComponent("ModelType")
     const ModelCollapse = getComponent("ModelCollapse")
     const Property = getComponent("Property")
 
@@ -83,10 +84,21 @@ export default class ObjectModel extends Component {
           }
           <span className="inner-object">
             {
-              <table className="model"><tbody>
+              <table className="model">
+              <thead>
+                <tr>
+                  <th id="model-head"><b>Key</b></th>
+                  <th id="model-head"><b>Required</b></th>
+                  <th id="model-head"><b>Type</b></th>
+                  <th id="model-head" className="parameters-col_value"><b>Value</b></th>
+                </tr>
+              </thead>
+              <tbody>
               {
                 !description ? null : <tr className="description">
-                    <td>description:</td>
+                    <td>Model Description:</td>
+                    <td></td>
+                    <td></td>
                     <td>
                       <Markdown source={ description } />
                     </td>
@@ -115,7 +127,17 @@ export default class ObjectModel extends Component {
 
                       return (<tr key={key} className={classNames.join(" ")}>
                         <td>
-                          { key }{ isRequired && <span className="star">*</span> }
+                          { key } 
+                        </td>
+                        <td>{ isRequired ? "True" : "False" }</td>
+                        <td>
+                          <ModelType key={ `object-${name}-${key}_${value}` } { ...otherProps }
+                                 required={ isRequired }
+                                 getComponent={ getComponent }
+                                 specPath={specPath.push("properties", key)}
+                                 getConfigs={ getConfigs }
+                                 schema={ value }
+                                 depth={ depth + 1 } />
                         </td>
                         <td>
                           <Model key={ `object-${name}-${key}_${value}` } { ...otherProps }
@@ -128,10 +150,6 @@ export default class ObjectModel extends Component {
                         </td>
                       </tr>)
                     }).toArray()
-              }
-              {
-                // empty row befor extensions...
-                !showExtensions ? null : <tr><td>&nbsp;</td></tr>
               }
               {
                 !showExtensions ? null :
@@ -147,6 +165,7 @@ export default class ObjectModel extends Component {
                         <td>
                           { key }
                         </td>
+                        <td></td>
                         <td>
                           { JSON.stringify(normalizedValue) }
                         </td>
@@ -157,6 +176,7 @@ export default class ObjectModel extends Component {
                 !additionalProperties || !additionalProperties.size ? null
                   : <tr>
                     <td>{ "< * >:" }</td>
+                    <td></td>
                     <td>
                       <Model { ...otherProps } required={ false }
                              getComponent={ getComponent }
@@ -171,6 +191,7 @@ export default class ObjectModel extends Component {
                 !anyOf ? null
                   : <tr>
                     <td>{ "anyOf ->" }</td>
+                    <td></td>
                     <td>
                       {anyOf.map((schema, k) => {
                         return <div key={k}><Model { ...otherProps } required={ false }
@@ -187,6 +208,7 @@ export default class ObjectModel extends Component {
                 !oneOf ? null
                   : <tr>
                     <td>{ "oneOf ->" }</td>
+                    <td></td>
                     <td>
                       {oneOf.map((schema, k) => {
                         return <div key={k}><Model { ...otherProps } required={ false }
@@ -203,6 +225,7 @@ export default class ObjectModel extends Component {
                 !not ? null
                   : <tr>
                     <td>{ "not ->" }</td>
+                    <td></td>
                     <td>
                       <div>
                         <Model { ...otherProps }

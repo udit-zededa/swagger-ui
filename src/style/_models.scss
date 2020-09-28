@@ -100,13 +100,7 @@
 
     .property
     {
-        color: #999;
         font-style: italic;
-
-        &.primitive
-        {
-             color: #6b6b6b;
-        }
     }
 }
 
@@ -116,7 +110,6 @@ table.model
     {
         &.description
         {
-            color: #666;
             font-weight: normal;
             
             td:first-child
@@ -135,6 +128,8 @@ table.model
             td
             {
                 vertical-align: top;
+                padding: 2em;
+                width: 174px;
 
                 &:first-child
                 {
@@ -150,7 +145,6 @@ table.model
 
         &.extension
         {
-            color: #777;
 
             td:last-child
             {
@@ -330,11 +324,6 @@ span
     display: inline-block;
 
     margin-right: 1em;
-}
-
-.prop-type
-{
-    color: $prop-type-font-color;
 }
 
 .prop-enum

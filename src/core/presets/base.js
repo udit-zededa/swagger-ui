@@ -70,6 +70,7 @@ import ModelCollapse from "core/components/model-collapse"
 import ModelExample from "core/components/model-example"
 import ModelWrapper from "core/components/model-wrapper"
 import Model from "core/components/model"
+import ModelType from "core/components/model-type"
 import Models from "core/components/models"
 import EnumModel from "core/components/enum-model"
 import ObjectModel from "core/components/object-model"
@@ -137,6 +138,7 @@ export default function() {
       ModelWrapper,
       ModelCollapse,
       Model,
+      ModelType,
       Models,
       EnumModel,
       ObjectModel,

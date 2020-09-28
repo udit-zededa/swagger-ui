@@ -40,29 +40,27 @@ export default class Primitive extends Component {
 
     return <span className="model">
       <span className="prop">
-        { name && <span className={`${depth === 1 && "model-title"} prop-name`}>{ title }</span> }
-        <span className="prop-type">{ type }</span>
-        { format && <span className="prop-format">(${format})</span>}
-        {
-          properties.size ? properties.entrySeq().map( ( [ key, v ] ) => <Property key={`${key}-${v}`} propKey={ key } propVal={ v } propClass={ propClass } />) : null
-        }
-        {
-          showExtensions && extensions.size ? extensions.entrySeq().map( ( [ key, v ] ) => <Property key={`${key}-${v}`} propKey={ key } propVal={ v } propClass={ propClass } />) : null
-        }
-        {
-          !description ? null :
-            <Markdown source={ description } />
-        }
-        {
-          xml && xml.size ? (<span><br /><span className={ propClass }>xml:</span>
+            { name && <span className={`${depth === 1 && "model-title"} prop-name`}>{ title }</span> }
+            {
+              properties.size ? properties.entrySeq().map( ( [ key, v ] ) => <Property key={`${key}-${v}`} propKey={ key } propVal={ v } propClass={ propClass } />) : null
+            }
+            {
+              showExtensions && extensions.size ? extensions.entrySeq().map( ( [ key, v ] ) => <Property key={`${key}-${v}`} propKey={ key } propVal={ v } propClass={ propClass } />) : null
+            }
+            {
+              !description ? null :
+              <Markdown source={ description } />
+            }
+            {
+              xml && xml.size ? (<span><br /><span className={ propClass }>xml:</span>
             {
               xml.entrySeq().map( ( [ key, v ] ) => <span key={`${key}-${v}`} className={ propClass }><br/>&nbsp;&nbsp;&nbsp;{key}: { String(v) }</span>).toArray()
             }
-          </span>): null
-        }
-        {
-          enumArray && <EnumModel value={ enumArray } getComponent={ getComponent } />
-        }
+              </span>): null
+            }
+            {
+              enumArray && <EnumModel value={ enumArray } getComponent={ getComponent } />
+            }        
       </span>
     </span>
   }

@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 
 export const Property = ({ propKey, propVal, propClass }) => {
     return (
-        <span className={ propClass }>
-          <br />{ propKey }: { String(propVal) }</span>
+        <p className={ propClass }>
+          { propKey }: { String(propVal) }</p>
     )
 }
 Property.propTypes = {
